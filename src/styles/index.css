@@ -1,0 +1,280 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --purple-primary: #7c3aed;
+    --purple-light: #8b5cf6;
+    --purple-pale: #f5f3ff;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(139, 92, 246, 0.15);
+    --shadow-purple: 0 8px 32px rgba(124, 58, 237, 0.15);
+  }
+
+  .dark {
+    --glass-bg: rgba(15, 10, 30, 0.7);
+    --glass-border: rgba(139, 92, 246, 0.25);
+    --shadow-purple: 0 8px 32px rgba(124, 58, 237, 0.3);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-white;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-purple-200 dark:bg-purple-800 text-purple-900 dark:text-purple-100;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-purple-400 rounded-full;
+  }
+}
+
+@layer components {
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .glass-card {
+    @apply glass rounded-2xl shadow-lg;
+    box-shadow: var(--shadow-purple);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold text-white;
+    background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(124, 58, 237, 0.5);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold;
+    @apply text-purple-700 dark:text-purple-300 border-2 border-purple-200 dark:border-purple-700;
+    @apply hover:bg-purple-50 dark:hover:bg-purple-900/30 transition-all duration-300;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold font-display;
+    @apply text-gray-900 dark:text-white leading-tight;
+  }
+
+  .section-subtitle {
+    @apply text-base md:text-lg text-gray-500 dark:text-gray-400 leading-relaxed;
+  }
+
+  .purple-text {
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .purple-gradient-bg {
+    background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 50%, #f5f3ff 100%);
+  }
+
+  .dark .purple-gradient-bg {
+    background: linear-gradient(135deg, #0f0a1e 0%, #1a0f35 50%, #0f0a1e 100%);
+  }
+
+  .stat-card {
+    @apply glass-card p-4 text-center;
+  }
+
+  .floating {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .floating-delayed {
+    animation: float 6s ease-in-out 2s infinite;
+  }
+
+  .scroll-indicator {
+    @apply fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-purple-300 z-50;
+    transform-origin: left;
+  }
+
+  .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 z-40 glass border-t border-purple-100 dark:border-purple-900/30;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(1deg); }
+  66% { transform: translateY(-6px) rotate(-1deg); }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes counter-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+
+.blob {
+  animation: blob 8s ease-in-out infinite;
+}
+
+.blob-delayed {
+  animation: blob 8s ease-in-out 3s infinite;
+}
+
+/* Three.js canvas */
+canvas {
+  touch-action: none;
+}
+
+/* Smooth transitions for dark mode */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.1s ease;
+}
+
+/* Mobile safe area */
+.safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+/* ===== Phase 2 additions ===== */
+
+/* Splash screen prevent body scroll */
+body.splash-active {
+  overflow: hidden;
+}
+
+/* Sticky story section */
+.story-step {
+  min-height: 100vh;
+}
+
+/* FAQ accordion smooth */
+.faq-content {
+  overflow: hidden;
+}
+
+/* Marquee pause on hover */
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Stats large numbers */
+.stat-number {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Improved glass on dark */
+.dark .glass {
+  background: rgba(10, 6, 26, 0.65);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+/* Touch ripple effect */
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  margin-top: -10px;
+  margin-left: -10px;
+}
+
+/* Scroll snap for mobile story */
+@media (max-width: 1024px) {
+  .story-step {
+    scroll-snap-align: start;
+  }
+}
+
+/* Better focus rings */
+:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Image optimization */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .floating, .floating-delayed, .blob, .blob-delayed {
+    animation: none !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .bottom-nav, .floating-whatsapp, .scroll-indicator {
+    display: none !important;
+  }
+}
